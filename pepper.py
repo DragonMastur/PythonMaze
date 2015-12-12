@@ -1,12 +1,3 @@
-'''Pepper - A Python app engine for Python beginers
-
-Hope you enjoy. Built using tkinter!
-'''
-
-# Dont bother about this file
-# Unless you have to.
-# It will just stress you out. 
-
 import sys, os, random, datetime, time
 
 X = 'x'
@@ -116,6 +107,7 @@ class GameScreen:
 	def __init__(self, zview=50, yview=50, xview=50, rootgeo=(500,500), roottitle="Pepper GameScreen", gb=None):
 		self.rectwidth = int(self.rootgeo[0]/xview)
 		self.rectheight = int(self.rootgeo[1]/yview)
+		self.rootgeo = rootgeo
 		if gb != None:
 			self.gameboard = gb
 		else:
@@ -240,6 +232,12 @@ class Game:
 		except:
 			pass
 		
+	def checkPos(self):
+		if self.postion[0]<0: self.postion[0]=0;
+		if self.postion[1]<0: self.postion[1]=0;
+		if self.postion[0]>int(self.GS.rootgeo[0]/self.GS.rectw)-1: self.postion[0]=int(self.GS.rootgeo[0]/self.GS.rectw)-1;
+		if self.postion[1]>int(self.GS.rootgeo[1]/self.GS.recth)-1: self.postion[1]=int(self.GS.rootgeo[1]/self.GS.recth)-1;
+		
 	def move(self, x, y, z=None):
 		try:
 			self.postion[0] += x
@@ -251,6 +249,7 @@ class Game:
 				self.onMoveExc(x,y)
 		except:
 			pass
+		self.checkPos()
 		self.update()
 		
 
